@@ -21,61 +21,6 @@
 
 */
 
-
-#define MAX_POWER = 127;
-#define MIN_POWER = -127;
-#define ZERO_POWER = 0;
-
-/*
-struct State {
-	int leftMotorPort, rightMotorPort;
-	float leftMotorPower, rightMotorPower;
-}
-
-struct State state;
-
-void initState(State &stateVar) {
-	struct State state;
-	state.leftMotorPort = 2;
-	state.rightMotorPort = 3;
-	state.leftMotorPower = 0.0;
-	state.rightMotorPower = 0.0;
-	stateVar = state;
-}
-
-void updateExternalState() {
-	startMotor(state.leftMotorPort, state.leftMotorPower);
-	startMotor(state.rightMotorPort, state.rightMotorPower);
-}
-
-void operation20() {
-
-	Write a program that performs the following simple behaviors
-	Use the natural language functions where appropriate as shown below
-	Add comments at the end of each command line to explain the purpose of each step
-		Turn the rightMotor on forward at half speed for 5 seconds, and then stop
-		Turn the leftMotor on in reverse at three-fourths speed for 2.5 seconds, and then stop
-		Turn both motors on at full power while spinning in the same direction for 7.25 seconds, and then stop
-
-
-	state.rightMotorPower = 62;
-	updateExternalState();
-	wait(5);
-	state.rightMotorPower = 0;
-	state.leftMotorPower = 95;
-	updateExternalState();
-	wait(2.5);
-	state.leftMotorPower = 127;
-	state.rightMotorPower = 127;
-	updateExternalState();
-	wait(7.25);
-	initState(state);
-	updateExternalState();
-}
-
-*/
-
-
 void operation20() {
 	wait(2);
 	startMotor(rightMotor, 64);
@@ -122,10 +67,7 @@ void otherOp() {
 }
 
 task main()
-{                                     //Program begins, insert code within curly braces
-	//initState(state);
-	//operation20();
-
+{
 	//operation20();
 	//operation26();
 	otherOp();
