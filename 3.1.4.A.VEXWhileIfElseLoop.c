@@ -3,23 +3,20 @@
 
 task main() {
 /*
-Task: Program the Cortex so that when the limit switch is pressed, the flashlight responds to light
-When the limit switch is pressed, the flashlight should turn on when it is dark in the room (or when the sensor is blocked)
-	and off when it is bright in the room
-When the limit switch is not pressed, the flashlight should always be off
-The program should loop indefinitely, waiting until the limit switch is pressed again
-If your group doesn’t have the flashlight, use a motor instead
+D.  Make one motor spin whenever a button is pressed and a second motor spin whenever a limit switch is pressed
+This behavior repeats indefinitely, as the two actions are independent
 */
-
 	while (1 == 1) {
-		if (SensorValue[dgtl1] == 1) {
-			if (SensorValue[in3] <= 500) {
-				startMotor(leftMotor, 127);
-			} else {
-				startMotor(rightMotor, -127);
-			}
+		if (SensorValue[dgtl2] == 1) {
+			startMotor(leftMotor, 127);
 		} else {
 			stopMotor(leftMotor);
 		}
+		if (SensorValue[dgtl1] == 1) {
+			startMotor(rightMotor, 127);
+		} else {
+			stopMotor(rightMotor);
+		}
+		startMotor(leftMotor, SensorValue[dgtl5]);
 	}
 }
