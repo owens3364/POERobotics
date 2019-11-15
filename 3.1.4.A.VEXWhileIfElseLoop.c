@@ -6,6 +6,7 @@ task main() {
 D.  Make one motor spin whenever a button is pressed and a second motor spin whenever a limit switch is pressed
 This behavior repeats indefinitely, as the two actions are independent
 */
+
 	while (1 == 1) {
 		if (SensorValue[dgtl2] == 1) {
 			startMotor(leftMotor, 127);
@@ -17,6 +18,14 @@ This behavior repeats indefinitely, as the two actions are independent
 		} else {
 			stopMotor(rightMotor);
 		}
-		startMotor(leftMotor, SensorValue[dgtl5]);
 	}
+
+	// For loops work
+	/*
+	for(int i = 0; i < 127; i++) {
+		startMotor(leftMotor, i);
+		wait(.25);
+	}
+	stopMotor(leftMotor);
+	*/
 }
