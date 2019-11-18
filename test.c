@@ -4,17 +4,22 @@ int baseSpeed;
 
 task main() {
 	baseSpeed = 0;
+
 	while (1==1) {
 		startMotor(leftMotor, baseSpeed/1000);
+
 		if (SensorValue[dgtl1]== 1) {
 			baseSpeed -= 1;
 		}
+
   	if (SensorValue[dgtl2]== 1) {
   		baseSpeed += 1;
   	}
+
   	if (baseSpeed < -127000) {
   	  baseSpeed = -127000;
   	}
+
   	if (baseSpeed > 127000) {
   	  baseSpeed = 127000;
   	}
