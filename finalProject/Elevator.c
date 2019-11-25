@@ -11,7 +11,7 @@
 static const byte MOTOR_DIRECTION = 1; // TODO: Update this
 
 static const byte OPPOSITE = -1;
-static const byte TOLERANCE = 10; // mm
+static const byte TOLERANCE = 2.5; // mm
 
 static const byte INACTIVITY_TIMEOUT = 30;
 
@@ -26,23 +26,52 @@ task timeout() {
 	stopAllTasks();
 }
 
-task main() {
-	while (1 == 1) {
-		if (SensorValue[dgtl1] == 1) {
-
-		} else if (SensorValue[dgtl2] == 1) {
-
-		} else if (SensorValue[dgtl3] == 1) {
-
-		}
-	}
-}
-
 void targetLevel(float targetLevel) {
-	while (SensorValue[sonar] - targetLevel > TOLERANCE * OPPOSITE && SensorValue[sonar] - targetLevel < TOLERANCE) {
-		if (SensorValue[sonar] < targetLevel) {
-
+	bool targetReached = false;
+	while (!targetReached) {
+		if (SensorValue[sonar] - targetLevel < TOLERANCE && SensorValue[sonar] - targetLevel > OPPOSITE * TOLERANCE) { //
+			if (SensorValue[sonar] < targetLevel) {
+				startMotor(elevatorMotor, 63.5 * MOTOR_DIRECTION);
+			} else if (SensorValue[sonar] > targetLevel) {
+				startMotor(elevatorMotor, -63.5 * MOTOR_DIRECTION);
+			}
 		}
 	}
 	stopMotor(elevatorMotor);
+}
+
+void updateLevel(int lvl) {
+	switch (lvl) {
+		case FIRST_FLOOR_SONAR_READING:
+			SensorValue[dgtl4] = 1;
+			SensorValue[dgtl5] = 0;
+			SensorValue[dgtl6] = 0;
+		case SECOND_FLOOR_SONAR_READING:
+			SensorValue[dgtl4] = 0;
+			SensorValue[dgtl5] = 1;
+			SensorValue[dgtl6] = 0;
+		case THIRD_FLOOR_SONAR_READING:
+			SensorValue[dgtl4] = 0;
+			SensorValue[dgtl5] = 0;
+			SensorValue[dgtl6] = 1;
+	}
+}
+
+task main() {
+	startTask(timeout);
+	while (true) {
+		if (SensorValue[dgtl1] == 1) {
+			targetLevel(FIRST_FLOOR_SONAR_READING);
+			updateLevel(FIRST_FLOOR_SONAR_READING);
+			startTask(timeout);
+		} else if (SensorValue[dgtl2] == 1) {
+			targetLevel(SECOND_FLOOR_SONAR_READING);
+			updateLevel(SECOND_FLOOR_SONAR_READING);
+			startTask(timeout);
+		} else if (SensorValue[dgtl3] == 1) {
+			targetLevel(THIRD_FLOOR_SONAR_READING);
+			updateLevel(THIRD_FLOOR_SONAR_READING);
+			startTask(timeout);
+		}
+	}
 }
