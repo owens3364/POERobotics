@@ -20,6 +20,8 @@ static const float FIRST_FLOOR_SONAR_READING = 1.5 * MM_PER_INCH;
 static const float SECOND_FLOOR_SONAR_READING = 10 * MM_PER_INCH; // TODO: Update this
 static const float THIRD_FLOOR_SONAR_READING = 20 * MM_PER_INCH; // TODO: Update this
 
+static float publicTarget = 0.0;
+
 // Waits for 30 seconds of inactivity before ending the program
 task timeout() {
 	wait(INACTIVITY_TIMEOUT);
@@ -27,9 +29,10 @@ task timeout() {
 }
 
 void targetLevel(float targetLevel) {
+	publicTarget = targetLevel;
 	bool targetReached = false;
 	while (!targetReached) {
-		if (SensorValue[sonar] - targetLevel < TOLERANCE && SensorValue[sonar] - targetLevel > OPPOSITE * TOLERANCE) { //
+		if (SensorValue[sonar] - targetLevel < TOLERANCE && SensorValue[sonar] - targetLevel > OPPOSITE * TOLERANCE) {
 			if (SensorValue[sonar] < targetLevel) {
 				startMotor(elevatorMotor, 63.5 * MOTOR_DIRECTION);
 			} else if (SensorValue[sonar] > targetLevel) {
@@ -74,4 +77,4 @@ task main() {
 			startTask(timeout);
 		}
 	}
-}
+} // all of this is coded by Tin Ngo, The master coder, The one and only, undefeated, undisputed champion of the world, super computer big brained, prodigy genius, full vietnamese, young man.
