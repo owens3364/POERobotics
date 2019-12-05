@@ -30,26 +30,19 @@ void travel()
 	wait(2); // waits 2 seconds for another package to be loaded onto again
 }
 
-
-task main()
-{
-	while(true)
-	{
-		if (SensorValue[dgtl1] == 1) // Push the button to start the vehicle
-		{
-		waitUntil(SensorValue[dgtl1] == 0);
-		hogCPU();
-		flag = false;
-		releaseCPU();
-		wait(1);
-		startTask(check);
-
-			while(true) //puts it in a loop to repeat the code below
-			{
+task main() {
+	while(true) {
+		if (SensorValue[dgtl1] == 1) {// Push the button to start the vehicle
+			waitUntil(SensorValue[dgtl1] == 0);
+			hogCPU();
+			flag = false;
+			releaseCPU();
+			wait(1);
+			startTask(check);
+			while(true) {//puts it in a loop to repeat the code below
 				travel();
 				hogCPU();
-				if(flag)
-				{
+				if (flag) {
 					travel();
 					break;
 				}
